@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나만의 블로그</title>
+    <link rel="stylesheet" href="/styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            text-align: center;
+        }
+        header {
+            background-color: #2db400;
+            color: white;
+            padding: 10px 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .container p {
+            font-size: 18px;
+        }
+        .container a {
+            display: block;
+            margin: 10px 0;
+            padding: 10px 20px;
+            background-color: #2db400;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .container a:hover {
+            background-color: #238c00;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>나만의 블로그</h1>
+</header>
+<div class="container">
+    <div><span th:text="${session.loginEmail}"></span>님 환영합니다</div>
+    <p>여기는 나만의 블로그 메인화면입니다.</p>
+    <a href="/member/saveid">회원가입</a>
+    <a href="/member/update">정보 수정하기</a>
+    <a href="/member/logout">로그아웃</a>
+    <a href="/member/">회원목록</a>
+    <a href="/board/">게시판</a>
+</div>
+</body>
+</html>

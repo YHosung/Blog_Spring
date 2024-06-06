@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>정보수정</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Arial', 'Helvetica', sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            width: 50%;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            font-size: 24px;
+            color: #333;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        form {
+            margin-top: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .input-group {
+            margin-bottom: 10px;
+            position: relative;
+        }
+        .input-group input {
+            width: calc(100% - 35px);
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+        .input-group .toggle-password {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #999;
+        }
+        .input-group .toggle-password:hover {
+            color: #007bff;
+        }
+        input[type="submit"] {
+            width: auto;
+            padding: 10px 20px;
+            background-color: #2db400;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        input[type="submit"]:hover {
+            background-color: #238c00;
+        }
+        .alert-danger {
+            color: #721c24; /* Dark red color */
+            background-color: #f8d7da; /* Light red background */
+            border-color: #f5c6cb; /* Lighter red border */
+            padding: 10px;
+            margin-bottom: 10px;
+            display: none; /* 초기에는 숨겨진 상태로 설정 */
+        }
+        .error-message {
+            color: #ff0000; /* Red color */
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>정보수정</h2>
+
+    <!-- 현재 비밀번호가 다를 경우 경고 메시지 -->
+    <div th:if="${error}" class="alert alert-danger">
+        <p th:text="${error}"></p>
+    </div>
+    <div th:if="${success}" class="alert alert-success">
+        <p th:text="${success}"></p>
+    </div>
+
+    <form id="updateForm" action="/member/update" method="post">
+        <input type="hidden" th:value="${updateMember.id}" name="id">
+
+        <div class="form-group">
+            <div class="input-group">
+                <label for="memberEmail">아이디:</label>
+                <input type="text" th:value="${updateMember.memberEmail}" name="memberEmail" readonly>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="input-group">
+                <label for="currentPassword">현재 비밀번호:</label>
+                <input type="password" name="currentPassword" id="currentPassword" required>
+                <div th:if="${error}" th:unless="${#strings.equals(error, '새 비밀번호는 현재 비밀번호와 달라야 합니다.')}" class="error-message">
+                    <p th:text="${error}"></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="input-group">
+                <label for="newPassword">새 비밀번호:</label>
+                <input type="password" name="memberPassword" id="newPassword" required>
+                <div class="toggle-password" onclick="togglePasswordVisibility('newPassword')">
+                    <i class="fas fa-eye"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="input-group">
+                <label for="memberName">이름:</label>
+                <input type="text" th:value="${updateMember.memberName}" name="memberName">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="정보수정">
+        </div>
+    </form>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+
+<script th:inline="javascript">
+    /* Thymeleaf inline script to toggle password visibility */
+    function togglePasswordVisibility(inputId) {
+        var passwordInput = document.getElementById(inputId);
+        var icon = document.querySelector('.toggle-password i');
+
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            passwordInput.type = "password";
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    }
+
+  
+    
+</script>
+
+</body>
+</html>

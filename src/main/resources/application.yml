@@ -1,0 +1,19 @@
+server:
+    address: localhost
+    port: 8080
+
+spring:
+    datasource:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/backtest?serverTimeZone=Asia/Seoul&characterEncoding=UTF-8
+        username: root
+        password: admin
+    thymeleaf:
+        cache: false
+
+    jpa:
+        database: mysql
+        open-in-view: false
+        show-sql: true
+        hibernate:
+            ddl-auto: update

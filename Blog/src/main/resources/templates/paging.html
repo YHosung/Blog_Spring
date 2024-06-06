@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시판 목록</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        h3 {
+            text-align: center;
+        }
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+        .pagination {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .pagination a {
+            display: inline-block;
+            padding: 8px 16px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            border: 1px solid #ddd;
+        }
+        .pagination a:hover {
+            background-color: #f1f1f1;
+        }
+        .pagination .active {
+            background-color: #007bff;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<h3>게시판 목록</h3>
+<button onclick="saveReq()">글작성</button>
+<button onclick="pagehome()">게시판 홈</button>
+
+<table>
+    <thead>
+    <tr>
+        <th>번호</th>
+        <th>제목</th>
+        <th>아이디</th>
+        <th>날짜</th>
+        <th>조회수</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="board: ${boardList}">
+        <td th:text="${board.id}"></td>
+        <td><a th:href="@{|/board/${board.id}|}" th:text="${board.boardTitle}"></a></td>
+        <td th:text="${board.boardWriter}"></td>
+        <td th:text="${#temporals.format(board.boardCreatedTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+        <td th:text="${board.boardHits}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="pagination">
+    <a th:href="@{/board/paging(page=1)}" th:class="${boardList.number == 0} ? 'active'">맨 처음</a>
+    <a th:href="@{/board/paging(page=${boardList.number})}" th:class="${boardList.hasPrevious()} ? '' : 'disabled'">이전</a>
+    <span th:each="page: ${#numbers.sequence(boardList.number - 2, boardList.number + 2)}">
+            <a th:if="${page >= 0 && page < boardList.totalPages}" th:href="@{/board/paging(page=${page})}" th:text="${page + 1}" th:class="${boardList.number == page} ? 'active'"></a>
+        </span>
+    <a th:href="@{/board/paging(page=${boardList.number + 2})}" th:class="${boardList.hasNext()} ? '' : 'disabled'">다음</a>
+    <a th:href="@{/board/paging(page=${boardList.totalPages})}" th:class="${boardList.number == boardList.totalPages - 1} ? 'active'">맨 마지막</a>
+</div>
+
+</body>
+<script>
+    const saveReq = () => {
+        location.href = "/board/save";
+    }
+    const pagehome = () => {
+        location.href = "/board/";
+    }
+</script>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원 정보</title>
+    <!-- 부트스트랩 CSS 링크 추가 -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .table {
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .btn-home {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2 class="text-center">회원 정보</h2>
+    <table class="table table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">번호</th>
+            <th scope="col">아이디</th>
+            <th scope="col">비밀번호</th>
+            <th scope="col">이름</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td th:text="${member.id}"></td>
+            <td th:text="${member.memberEmail}"></td>
+            <td th:text="${member.memberPassword}"></td>
+            <td th:text="${member.memberName}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="text-center">
+        <a th:if="${session.loginEmail != null}" href="/main" class="btn btn-primary btn-home">홈</a>
+        <a th:unless="${session.loginEmail != null}" href="/member/login" class="btn btn-primary btn-home">홈</a>
+        <form th:action="@{/member/delete/{id}(id=${member.id})}" method="post" style="display:inline;">
+            <button type="submit" class="btn btn-danger btn-home" onclick="return confirm('정말 탈퇴하시겠습니까?');">회원 탈퇴</button>
+        </form>
+    </div>
+</div>
+
+<!-- 부트스트랩 JS 및 jQuery 추가 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

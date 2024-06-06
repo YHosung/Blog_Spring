@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>글 작성</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        form {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-radius: 5px;
+        }
+        form input[type="text"],
+        form textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        form textarea {
+            height: 200px;
+            resize: vertical;
+        }
+        form input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        form input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<form action="/board/save" method="post">
+    <label for="boardWriter">아이디:</label><br>
+    <input type="text" id="boardWriter" name="boardWriter"><br>
+
+    <label for="boardPass">비밀번호:</label><br>
+    <input type="password" id="boardPass" name="boardPass"><br>
+
+    <label for="boardTitle">제목:</label><br>
+    <input type="text" id="boardTitle" name="boardTitle"><br>
+
+    <label for="boardContents">내용:</label><br>
+    <textarea id="boardContents" name="boardContents" cols="30" rows="10"></textarea><br>
+
+    <input type="submit" value="글작성">
+</form>
+</body>
+</html>
